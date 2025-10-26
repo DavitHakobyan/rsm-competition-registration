@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,7 +27,10 @@ export class CompetitionsComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  constructor(private competitionService: CompetitionService) {}
+  constructor(
+    private competitionService: CompetitionService,
+    private router: Router
+  ) {}
 
   async ngOnInit(): Promise<void> {
     await this.loadCompetitions();
@@ -60,7 +64,8 @@ export class CompetitionsComponent implements OnInit {
   }
 
   onRegister(competition: Competition): void {
-    // TODO: Navigate to registration form
-    console.log('Registering for competition:', competition);
+    if (competition.id) {
+      this.router.navigate(['/register', competition.id]);
+    }
   }
 }

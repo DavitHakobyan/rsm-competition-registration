@@ -1,0 +1,265 @@
+.registrations-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.registrations-content {
+  padding: 24px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.loading-container,
+.error-container,
+.empty-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  text-align: center;
+  
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
+  }
+  
+  h2 {
+    margin: 16px 0 8px 0;
+    color: #333;
+  }
+  
+  p {
+    margin: 8px 0 24px 0;
+    color: #666;
+  }
+}
+
+.registrations-list {
+  .list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    
+    h2 {
+      margin: 0;
+      color: #333;
+    }
+    
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  }
+}
+
+.registration-card {
+  margin-bottom: 20px;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .student-avatar {
+    background-color: #3f51b5;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.registration-details {
+  .detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 12px;
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      
+      mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+        color: #666;
+      }
+      
+      span {
+        font-size: 14px;
+        color: #555;
+      }
+    }
+  }
+  
+  .status-row {
+    margin: 16px 0;
+    
+    .status-chips {
+      mat-chip-set {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      
+      mat-chip {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        
+        mat-icon {
+          font-size: 16px;
+          width: 16px;
+          height: 16px;
+        }
+      }
+    }
+  }
+  
+  .contact-info {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    border-left: 4px solid #2196f3;
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        color: #2196f3;
+      }
+      
+      span {
+        font-size: 13px;
+        color: #333;
+      }
+    }
+  }
+  
+  .special-notes {
+    margin-top: 16px;
+    padding: 12px;
+    background-color: #fff3e0;
+    border-radius: 4px;
+    border-left: 4px solid #ff9800;
+    
+    .note-item {
+      margin-bottom: 12px;
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+      
+      strong {
+        font-size: 13px;
+        color: #e65100;
+        display: block;
+        margin-bottom: 4px;
+      }
+      
+      p {
+        margin: 0;
+        font-size: 13px;
+        color: #333;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+
+mat-card-actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+  
+  button {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+  .registrations-content {
+    padding: 16px;
+  }
+  
+  .list-header {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+    
+    button {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+  
+  .detail-row {
+    flex-direction: column;
+    gap: 8px !important;
+  }
+  
+  mat-card-actions {
+    flex-wrap: wrap;
+    justify-content: center;
+    
+    button {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+}
+
+// Status chip colors
+::ng-deep .mat-mdc-chip.mat-primary {
+  --mdc-chip-elevated-selected-container-color: #1976d2;
+  --mdc-chip-label-text-color: white;
+}
+
+::ng-deep .mat-mdc-chip.mat-accent {
+  --mdc-chip-elevated-selected-container-color: #ff4081;
+  --mdc-chip-label-text-color: white;
+}
+
+::ng-deep .mat-mdc-chip.mat-warn {
+  --mdc-chip-elevated-selected-container-color: #f44336;
+  --mdc-chip-label-text-color: white;
+}
