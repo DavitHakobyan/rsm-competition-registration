@@ -169,12 +169,12 @@ export class RegisterComponent implements OnInit {
 
         const registrationId = await this.registrationService.createRegistration(registrationData);
         
-        this.snackBar.open('Registration submitted successfully! Complete payment to confirm your spot.', 'Close', { 
+        this.snackBar.open('Registration submitted successfully!', 'Close', { 
           duration: 5000,
           panelClass: ['success-snackbar']
         });
         
-        // Navigate to registrations list where they can complete payment
+        // Navigate to registrations list
         this.router.navigate(['/my-registrations']);
         
       } catch (error) {

@@ -37,14 +37,14 @@ export class RegistrationService {
       status: 'pending',
       paid: false
     };
-    
+
     const docRef = await addDoc(this.registrationsCollection, registrationData);
     return docRef.id;
   }
 
   async getRegistrationsByParent(parentId: string): Promise<Registration[]> {
     const q = query(
-      this.registrationsCollection, 
+      this.registrationsCollection,
       where('parentId', '==', parentId),
       orderBy('registrationDate', 'desc')
     );
@@ -61,7 +61,7 @@ export class RegistrationService {
 
   async getRegistrationsByCompetition(competitionId: string): Promise<Registration[]> {
     const q = query(
-      this.registrationsCollection, 
+      this.registrationsCollection,
       where('competitionId', '==', competitionId),
       orderBy('registrationDate', 'asc')
     );
@@ -82,10 +82,10 @@ export class RegistrationService {
   }
 
   async confirmPayment(id: string, paymentId: string): Promise<void> {
-    await this.updateRegistration(id, { 
-      paid: true, 
-      paymentId, 
-      status: 'confirmed' 
+    await this.updateRegistration(id, {
+      paid: true,
+      paymentId,
+      status: 'confirmed'
     });
   }
 
