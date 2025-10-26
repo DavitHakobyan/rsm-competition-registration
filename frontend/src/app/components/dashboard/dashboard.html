@@ -1,0 +1,48 @@
+<div class="dashboard-container">
+  <mat-toolbar color="primary">
+    <span>Math Competition Registration</span>
+    <span class="spacer"></span>
+    <div *ngIf="user$ | async as user" class="user-info">
+      <img *ngIf="user.photoURL" [src]="user.photoURL" [alt]="user.displayName" class="user-avatar">
+      <span class="user-name">{{ user.displayName }}</span>
+      <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <div class="dashboard-content">
+    <div class="welcome-section">
+      <h1>Welcome to Math Competition Registration</h1>
+      <p>Manage your child's math competition registrations here.</p>
+    </div>
+
+    <div class="cards-container">
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>Available Competitions</mat-card-title>
+          <mat-card-subtitle>Browse and register for upcoming competitions</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>View all available math competitions and register your child.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">View Competitions</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>My Registrations</mat-card-title>
+          <mat-card-subtitle>View your current registrations</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Check the status of your child's competition registrations.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent">View Registrations</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
