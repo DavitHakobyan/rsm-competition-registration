@@ -1,0 +1,72 @@
+<div class="competitions-container">
+  <mat-toolbar color="primary">
+    <span>Available Math Competitions</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="loadCompetitions()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="competitions-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading competitions...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadCompetitions()">
+        Try Again
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && competitions.length === 0" class="empty-container">
+      <mat-icon>event_busy</mat-icon>
+      <h2>No Competitions Available</h2>
+      <p>There are currently no math competitions available for registration.</p>
+    </div>
+
+    <!-- Competitions List -->
+    <div *ngIf="!loading && !error && competitions.length > 0" class="competitions-grid">
+      <mat-card *ngFor="let competition of competitions" class="competition-card">
+        <mat-card-header>
+          <mat-card-title>{{ competition.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-icon>event</mat-icon>
+            {{ formatDate(competition.date) }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <div class="competition-details">
+            <div class="detail-item">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ competition.location }}</span>
+            </div>
+            
+            <div class="detail-item">
+              <mat-icon>attach_money</mat-icon>
+              <span>{{ formatPrice(competition.registrationFee) }}</span>
+            </div>
+            
+            <p class="description">{{ competition.description }}</p>
+          </div>
+        </mat-card-content>
+        
+        <mat-card-actions align="end">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="onRegister(competition)">
+            <mat-icon>how_to_reg</mat-icon>
+            Register
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
