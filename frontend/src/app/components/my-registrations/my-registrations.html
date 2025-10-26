@@ -1,0 +1,147 @@
+<div class="registrations-container">
+  <mat-toolbar color="primary">
+    <button mat-icon-button routerLink="/dashboard" matTooltip="Back to Dashboard">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+    <span>My Registrations</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="loadRegistrations()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="registrations-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading your registrations...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadRegistrations()">
+        Try Again
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && registrations.length === 0" class="empty-container">
+      <mat-icon>assignment_turned_in</mat-icon>
+      <h2>No Registrations Yet</h2>
+      <p>You haven't registered for any competitions yet.</p>
+      <button mat-raised-button color="primary" (click)="onAddNewRegistration()">
+        <mat-icon>add</mat-icon>
+        Browse Competitions
+      </button>
+    </div>
+
+    <!-- Registrations List -->
+    <div *ngIf="!loading && !error && registrations.length > 0" class="registrations-list">
+      <div class="list-header">
+        <h2>Your Registrations</h2>
+        <button mat-raised-button color="primary" (click)="onAddNewRegistration()">
+          <mat-icon>add</mat-icon>
+          New Registration
+        </button>
+      </div>
+
+      <mat-card *ngFor="let registration of registrations" class="registration-card">
+        <mat-card-header>
+          <div mat-card-avatar class="student-avatar">
+            <mat-icon>person</mat-icon>
+          </div>
+          <mat-card-title>{{ registration.studentName }}</mat-card-title>
+          <mat-card-subtitle>{{ registration.competitionName }}</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div class="registration-details">
+            <div class="detail-row">
+              <div class="detail-item">
+                <mat-icon>school</mat-icon>
+                <span>{{ registration.studentGrade }}</span>
+              </div>
+              <div class="detail-item" *ngIf="registration.studentSchool">
+                <mat-icon>business</mat-icon>
+                <span>{{ registration.studentSchool }}</span>
+              </div>
+            </div>
+
+            <div class="detail-row">
+              <div class="detail-item">
+                <mat-icon>event</mat-icon>
+                <span>Registered: {{ formatDateTime(registration.registrationDate) }}</span>
+              </div>
+            </div>
+
+            <div class="status-row">
+              <div class="status-chips">
+                <mat-chip-set>
+                  <mat-chip [color]="getStatusColor(registration.status)">
+                    <mat-icon>{{ getStatusIcon(registration.status) }}</mat-icon>
+                    {{ registration.status | titlecase }}
+                  </mat-chip>
+                  
+                  <mat-chip [color]="registration.paid ? 'primary' : 'accent'">
+                    <mat-icon>{{ getPaymentStatusIcon(registration.paid) }}</mat-icon>
+                    {{ getPaymentStatusText(registration.paid) }}
+                  </mat-chip>
+                </mat-chip-set>
+              </div>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="contact-info" *ngIf="registration.parentPhone || registration.emergencyContact">
+              <div class="detail-item" *ngIf="registration.parentPhone">
+                <mat-icon>phone</mat-icon>
+                <span>{{ registration.parentPhone }}</span>
+              </div>
+              <div class="detail-item" *ngIf="registration.emergencyContact">
+                <mat-icon>contact_emergency</mat-icon>
+                <span>{{ registration.emergencyContact }}</span>
+                <span *ngIf="registration.emergencyPhone">({{ registration.emergencyPhone }})</span>
+              </div>
+            </div>
+
+            <!-- Special Notes -->
+            <div class="special-notes" *ngIf="registration.specialNeeds || registration.dietaryRestrictions">
+              <div class="note-item" *ngIf="registration.specialNeeds">
+                <strong>Special Accommodations:</strong>
+                <p>{{ registration.specialNeeds }}</p>
+              </div>
+              <div class="note-item" *ngIf="registration.dietaryRestrictions">
+                <strong>Dietary Restrictions:</strong>
+                <p>{{ registration.dietaryRestrictions }}</p>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+          <button mat-button (click)="onViewDetails(registration)">
+            <mat-icon>visibility</mat-icon>
+            Details
+          </button>
+          
+          <button mat-button 
+                  *ngIf="!registration.paid && registration.status !== 'cancelled'"
+                  (click)="onPayNow(registration)"
+                  color="accent">
+            <mat-icon>payment</mat-icon>
+            Pay Now
+          </button>
+          
+          <button mat-button 
+                  *ngIf="registration.status !== 'cancelled'"
+                  (click)="onCancelRegistration(registration)"
+                  color="warn">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,109 @@
+<div class="competitions-container">
+  <mat-toolbar color="primary">
+    <span>Available Math Competitions</span>
+    <span class="spacer"></span>
+    
+    <!-- Navigation buttons -->
+    <button mat-icon-button routerLink="/my-registrations" matTooltip="My Registrations">
+      <mat-icon>assignment_turned_in</mat-icon>
+    </button>
+    
+    <button mat-icon-button routerLink="/dashboard" matTooltip="Dashboard">
+      <mat-icon>dashboard</mat-icon>
+    </button>
+    
+    <button mat-icon-button (click)="loadCompetitions()" matTooltip="Refresh">
+      <mat-icon>refresh</mat-icon>
+    </button>
+    
+    <!-- User menu -->
+    <button mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="Account">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item routerLink="/my-registrations">
+        <mat-icon>assignment_turned_in</mat-icon>
+        <span>My Registrations</span>
+      </button>
+      <button mat-menu-item routerLink="/dashboard">
+        <mat-icon>dashboard</mat-icon>
+        <span>Dashboard</span>
+      </button>
+      <mat-divider></mat-divider>
+      <button mat-menu-item (click)="signOut()">
+        <mat-icon>logout</mat-icon>
+        <span>Sign Out</span>
+      </button>
+    </mat-menu>
+  </mat-toolbar>
+
+  <div class="competitions-content">
+    <!-- Loading State -->
+    <div *ngIf="loading" class="loading-container">
+      <mat-spinner></mat-spinner>
+      <p>Loading competitions...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !loading" class="error-container">
+      <mat-icon color="warn">error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadCompetitions()">
+        Try Again
+      </button>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!loading && !error && competitions.length === 0" class="empty-container">
+      <mat-icon>event_busy</mat-icon>
+      <h2>No Competitions Available</h2>
+      <p>There are currently no math competitions available for registration.</p>
+    </div>
+
+    <!-- Competitions List -->
+    <div *ngIf="!loading && !error && competitions.length > 0" class="competitions-grid">
+      <mat-card *ngFor="let competition of competitions" class="competition-card">
+        <mat-card-header>
+          <mat-card-title>{{ competition.name }}</mat-card-title>
+          <mat-card-subtitle>
+            <mat-icon>event</mat-icon>
+            {{ formatDate(competition.date) }}
+          </mat-card-subtitle>
+        </mat-card-header>
+        
+        <mat-card-content>
+          <div class="competition-details">
+            <div class="detail-item">
+              <mat-icon>location_on</mat-icon>
+              <span>{{ competition.location }}</span>
+            </div>
+            
+            <div class="detail-item">
+              <mat-icon>attach_money</mat-icon>
+              <span>Registration Fee: {{ formatPrice(competition.registrationFee) }}</span>
+            </div>
+            
+            <p class="description">{{ competition.description }}</p>
+            
+            <div class="registration-info">
+              <mat-icon>info</mat-icon>
+              <small>Complete registration and payment to secure your child's spot</small>
+            </div>
+          </div>
+        </mat-card-content>
+        
+        <mat-card-actions align="end">
+          <button 
+            mat-raised-button 
+            color="primary" 
+            (click)="onRegister(competition)"
+            class="register-button">
+            <mat-icon>how_to_reg</mat-icon>
+            Register & Pay
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
+</div>
