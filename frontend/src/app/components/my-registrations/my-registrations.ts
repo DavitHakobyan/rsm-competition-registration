@@ -144,8 +144,9 @@ export class MyRegistrationsComponent implements OnInit {
       return;
     }
     
-    // TODO: Integrate with payment system
-    this.snackBar.open('Payment integration coming soon!', 'Close', { duration: 3000 });
+    if (registration.id) {
+      this.router.navigate(['/payment', registration.id]);
+    }
   }
 
   onAddNewRegistration(): void {

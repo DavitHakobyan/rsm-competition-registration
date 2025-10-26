@@ -164,18 +164,19 @@ export class RegisterComponent implements OnInit {
           parentId: currentUser.uid,
           competitionId: this.competition.id!,
           competitionName: this.competition.name,
+          competitionFee: this.competition.registrationFee,
           ...this.registrationForm.value
         };
 
         const registrationId = await this.registrationService.createRegistration(registrationData);
         
-        this.snackBar.open('Registration submitted successfully!', 'Close', { 
-          duration: 5000,
+        this.snackBar.open('Registration submitted successfully! Redirecting to payment...', 'Close', { 
+          duration: 3000,
           panelClass: ['success-snackbar']
         });
         
-        // Navigate to registrations list
-        this.router.navigate(['/my-registrations']);
+        // Navigate to payment page
+        this.router.navigate(['/payment', registrationId]);
         
       } catch (error) {
         console.error('Error submitting registration:', error);
