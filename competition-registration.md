@@ -4,6 +4,9 @@ Let’s build a **complete development plan** for your Firebase-based Angular ap
 
 We’ll structure it into **6 main sections**, each with clear steps and implementation details (ready for Cursor AI or any co-pilot to execute).
 
+
+Treat this file as a living document, and log our progress steps.
+
 ---
 
 ## 🧩 Project Overview
