@@ -46,4 +46,15 @@ export class DashboardComponent implements OnInit {
       alert('Error adding sample competitions. Please try again.');
     }
   }
+
+  /*
+  async seedData(): Promise<void> {
+    try {
+      await this.dataSeedService.seedCompetitions();
+      alert('Sample competitions added successfully!');
+    } catch (error) {
+      console.error('Error seeding data:', error);
+      alert('Error adding sample competitions. Please try again.');
+    }
+  }*/
 }

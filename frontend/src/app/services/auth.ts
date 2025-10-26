@@ -24,7 +24,7 @@ export class AuthService {
       const result = await signInWithPopup(this.auth, this.googleProvider);
       if (result.user) {
         await this.saveUserProfile(result.user);
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/competitions']);
       }
     } catch (error) {
       console.error('Error signing in with Google:', error);

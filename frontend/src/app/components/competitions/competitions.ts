@@ -1,23 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatDividerModule } from '@angular/material/divider';
 import { CompetitionService, Competition } from '../../services/competition';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-competitions',
   standalone: true,
   imports: [
     CommonModule, 
+    RouterLink,
     MatCardModule, 
     MatButtonModule, 
     MatIconModule,
     MatToolbarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatMenuModule,
+    MatDividerModule
   ],
   templateUrl: './competitions.html',
   styleUrl: './competitions.scss'
@@ -29,7 +35,8 @@ export class CompetitionsComponent implements OnInit {
 
   constructor(
     private competitionService: CompetitionService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -67,5 +74,9 @@ export class CompetitionsComponent implements OnInit {
     if (competition.id) {
       this.router.navigate(['/register', competition.id]);
     }
+  }
+
+  async signOut(): Promise<void> {
+    await this.authService.signOut();
   }
 }
