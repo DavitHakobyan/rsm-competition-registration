@@ -1,6 +1,10 @@
 {
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
   "hosting": {
-    "public": "public",
+    "public": "frontend/dist/math-competition-registration",
     "ignore": [
       "firebase.json",
       "**/.*",

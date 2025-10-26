@@ -79,13 +79,12 @@
             <div class="status-row">
               <div class="status-chips">
                 <mat-chip-set>
-                  <mat-chip [color]="getStatusColor(registration.status)" selected>
+                  <mat-chip [color]="getStatusColor(registration.status)">
                     <mat-icon>{{ getStatusIcon(registration.status) }}</mat-icon>
                     {{ registration.status | titlecase }}
                   </mat-chip>
                   
-                  <mat-chip [color]="registration.paid ? 'primary' : 'accent'" 
-                           [selected]="registration.paid">
+                  <mat-chip [color]="registration.paid ? 'primary' : 'accent'">
                     <mat-icon>{{ getPaymentStatusIcon(registration.paid) }}</mat-icon>
                     {{ getPaymentStatusText(registration.paid) }}
                   </mat-chip>
