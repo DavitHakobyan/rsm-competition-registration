@@ -1,0 +1,13 @@
+{
+  "name": "rsm-competition-registration",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "firebase emulators:start --import=./emulator-data",
+    "dev:seed": "firebase emulators:start --import=./emulator-data && ./scripts/seed-emulator.sh",
+    "emulator:start": "firebase emulators:start",
+    "emulator:export": "firebase emulators:export ./emulator-data",
+    "serve:local": "cd frontend && npm run start:local",
+    "build:local": "cd frontend && npm run build:local"
+  },
+  "private": true
+}

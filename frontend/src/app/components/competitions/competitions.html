@@ -81,15 +81,10 @@
             
             <div class="detail-item">
               <mat-icon>attach_money</mat-icon>
-              <span>Registration Fee: {{ formatPrice(competition.registrationFee) }}</span>
+              <span>{{ formatPrice(competition.registrationFee) }}</span>
             </div>
             
             <p class="description">{{ competition.description }}</p>
-            
-            <div class="registration-info">
-              <mat-icon>info</mat-icon>
-              <small>Complete registration and payment to secure your child's spot</small>
-            </div>
           </div>
         </mat-card-content>
         
@@ -100,7 +95,7 @@
             (click)="onRegister(competition)"
             class="register-button">
             <mat-icon>how_to_reg</mat-icon>
-            Register & Pay
+            Register
           </button>
         </mat-card-actions>
       </mat-card>
