@@ -1,0 +1,12 @@
+:host { display: block; }
+
+.admin-parents-container { height: 100%; }
+.spacer { flex: 1 1 auto; }
+.content-container { padding: 16px; }
+.header-section { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.registrations-card { max-width: 1200px; margin: 0 auto; }
+.table-container { overflow: auto; }
+.registrations-table { width: 100%; }
+.loading-container { display: flex; align-items: center; gap: 12px; }
+.empty-state { text-align: center; padding: 24px; }
+

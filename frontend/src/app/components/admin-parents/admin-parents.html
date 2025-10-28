@@ -1,0 +1,95 @@
+<div class="admin-parents-container">
+  <mat-toolbar color="primary">
+    <span>Admin - Parent Registrations</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="goToCompetitions()" class="nav-button">
+      <mat-icon>visibility</mat-icon>
+      View Public
+    </button>
+    <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <div class="header-section">
+      <h1>Parent Registrations</h1>
+    </div>
+
+    <mat-card class="registrations-card">
+      <mat-card-header>
+        <mat-card-title>All Parent Registrations</mat-card-title>
+        <mat-card-subtitle>View and manage registrations and payment status</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngIf="isLoading" class="loading-container">
+          <mat-spinner diameter="36"></mat-spinner>
+          <p>Loading registrations...</p>
+        </div>
+
+        <div *ngIf="!isLoading && registrations.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">people_outline</mat-icon>
+          <h3>No registrations found</h3>
+          <p>Registrations will appear here as parents sign up.</p>
+        </div>
+
+        <div *ngIf="!isLoading && registrations.length > 0" class="table-container">
+          <table mat-table [dataSource]="registrations" class="registrations-table">
+
+            <!-- Parent ID Column -->
+            <ng-container matColumnDef="parentId">
+              <th mat-header-cell *matHeaderCellDef>Parent ID</th>
+              <td mat-cell *matCellDef="let reg">{{ reg.parentId }}</td>
+            </ng-container>
+
+            <!-- Student Name Column -->
+            <ng-container matColumnDef="studentName">
+              <th mat-header-cell *matHeaderCellDef>Student</th>
+              <td mat-cell *matCellDef="let reg">{{ reg.studentName }} (Grade {{ reg.studentGrade }})</td>
+            </ng-container>
+
+            <!-- Competition Column -->
+            <ng-container matColumnDef="competitionName">
+              <th mat-header-cell *matHeaderCellDef>Competition</th>
+              <td mat-cell *matCellDef="let reg">{{ reg.competitionName || reg.competitionId }}</td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="registrationDate">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let reg">{{ formatDate(reg.registrationDate) }}</td>
+            </ng-container>
+
+            <!-- Paid Column -->
+            <ng-container matColumnDef="paid">
+              <th mat-header-cell *matHeaderCellDef>Paid</th>
+              <td mat-cell *matCellDef="let reg">
+                <mat-icon color="primary" *ngIf="reg.paid">check_circle</mat-icon>
+                <mat-icon color="warn" *ngIf="!reg.paid">highlight_off</mat-icon>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let reg">
+                <button mat-button color="primary" (click)="togglePaid(reg)">
+                  <mat-icon>{{ reg.paid ? 'payment' : 'credit_card' }}</mat-icon>
+                  {{ reg.paid ? 'Mark Unpaid' : 'Mark Paid' }}
+                </button>
+                <button mat-icon-button (click)="viewRegistration(reg)" matTooltip="View Competition">
+                  <mat-icon>visibility</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+

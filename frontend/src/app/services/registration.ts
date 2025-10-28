@@ -79,7 +79,7 @@ export class RegistrationService {
   async getRegistrationById(id: string): Promise<Registration | null> {
     const registrationRef = doc(this.firestore, 'registrations', id);
     const docSnap = await getDoc(registrationRef);
-    
+
     if (docSnap.exists()) {
       return {
         id: docSnap.id,
@@ -104,6 +104,19 @@ export class RegistrationService {
       paymentId,
       status: 'confirmed'
     });
+  }
+
+  // Fetch all registrations (admin use)
+  async getAllRegistrations(): Promise<Registration[]> {
+    const q = query(
+      this.registrationsCollection,
+      orderBy('registrationDate', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Registration[];
   }
 
   async deleteRegistration(id: string): Promise<void> {

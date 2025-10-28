@@ -6,6 +6,10 @@
       <mat-icon>visibility</mat-icon>
       View Public
     </button>
+    <button mat-button routerLink="/admin/parents" class="nav-button">
+      <mat-icon>people</mat-icon>
+      Parent Registrations
+    </button>
     <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
       <mat-icon>logout</mat-icon>
     </button>
@@ -43,7 +47,7 @@
 
         <div *ngIf="!isLoading && competitions.length > 0" class="table-container">
           <table mat-table [dataSource]="competitions" class="competitions-table">
-            
+
             <!-- Name Column -->
             <ng-container matColumnDef="name">
               <th mat-header-cell *matHeaderCellDef class="name-column">Competition Name</th>
@@ -89,14 +93,14 @@
             <ng-container matColumnDef="actions">
               <th mat-header-cell *matHeaderCellDef class="actions-column">Actions</th>
               <td mat-cell *matCellDef="let competition" class="actions-cell">
-                <button mat-icon-button 
-                        (click)="editCompetition(competition)" 
+                <button mat-icon-button
+                        (click)="editCompetition(competition)"
                         matTooltip="Edit Competition"
                         color="primary">
                   <mat-icon>edit</mat-icon>
                 </button>
-                <button mat-icon-button 
-                        (click)="deleteCompetition(competition)" 
+                <button mat-icon-button
+                        (click)="deleteCompetition(competition)"
                         matTooltip="Delete Competition"
                         color="warn">
                   <mat-icon>delete</mat-icon>

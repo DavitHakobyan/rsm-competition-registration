@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthService } from '../../services/auth';
 import { DataSeedService } from '../../services/data-seed';
 import { Observable } from 'rxjs';
@@ -13,7 +14,7 @@ import { User } from '@angular/fire/auth';
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule],
+  imports: [CommonModule, RouterLink, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })
