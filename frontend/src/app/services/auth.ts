@@ -24,7 +24,8 @@ export class AuthService {
       const result = await signInWithPopup(this.auth, this.googleProvider);
       if (result.user) {
         await this.saveUserProfile(result.user);
-        this.router.navigate(['/competitions']);
+        // After successful login, redirect to the dashboard as requested
+        this.router.navigate(['/dashboard']);
       }
     } catch (error) {
       console.error('Error signing in with Google:', error);
@@ -45,7 +46,7 @@ export class AuthService {
   private async saveUserProfile(user: User): Promise<void> {
     const userRef = doc(this.firestore, `parents/${user.uid}`);
     const userDoc = await getDoc(userRef);
-    
+
     if (!userDoc.exists()) {
       await setDoc(userRef, {
         uid: user.uid,
