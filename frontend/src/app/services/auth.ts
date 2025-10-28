@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithPopup, GoogleAuthProvider, signOut, user, User } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc, collection, query, where, getDocs } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -23,8 +23,51 @@ export class AuthService {
     try {
       const result = await signInWithPopup(this.auth, this.googleProvider);
       if (result.user) {
-        await this.saveUserProfile(result.user);
-        // After successful login, redirect to the dashboard as requested
+        // Show Google account information in an alert after successful sign-in
+
+        const u = result.user;
+        /*
+        const info = `Signed in as:\nName: ${u.displayName || 'N/A'}\nEmail: ${u.email || 'N/A'}\nUID: ${u.uid}\nPhoto: ${u.photoURL || 'N/A'}`;
+        // Use window.alert to make it clear this is a user-facing notification
+        window.alert(info);
+         */
+
+        // Check if a parent profile already exists for this email
+        const email = u.email;
+        debugger;
+        if (email) {
+          const parentsCol = collection(this.firestore, 'parents');
+          const q = query(parentsCol, where('email', '==', email));
+          const snapshot = await getDocs(q);
+
+          if (snapshot.empty) {
+            // No parent with this email — create a new parent profile using Google info
+            const parentRef = doc(this.firestore, `parents/${u.uid}`);
+            await setDoc(parentRef, {
+              uid: u.uid,
+              displayName: u.displayName || null,
+              email: u.email || null,
+              photoURL: u.photoURL || null,
+              createdAt: new Date(),
+              lastLoginAt: new Date()
+            });
+          } else {
+            // Parent profile(s) found for this email — merge/update the first one with latest info
+            const existingDoc = snapshot.docs[0];
+            const existingRef = doc(this.firestore, `parents/${existingDoc.id}`);
+            await setDoc(existingRef, {
+              uid: u.uid,
+              displayName: u.displayName || (existingDoc.data() as any)['displayName'] || null,
+              photoURL: u.photoURL || (existingDoc.data() as any)['photoURL'] || null,
+              lastLoginAt: new Date()
+            }, { merge: true });
+          }
+        } else {
+          // Fallback: no email from provider — fallback to uid-based save
+          await this.saveUserProfile(result.user);
+        }
+
+        // After successful login/profile handling, redirect to the dashboard
         this.router.navigate(['/dashboard']);
       }
     } catch (error) {

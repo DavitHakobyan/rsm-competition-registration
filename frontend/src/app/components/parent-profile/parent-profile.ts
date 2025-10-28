@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +46,8 @@ export class ParentProfileComponent implements OnInit {
     public authService: AuthService,
     private parentService: ParentService,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.profileForm = this.fb.group({
       displayName: [''],
@@ -69,6 +70,9 @@ export class ParentProfileComponent implements OnInit {
       return;
     }
     this.uid = user.uid;
+    // Check query param to determine if profile should be displayed in view-only mode
+    const mode = this.route.snapshot.queryParamMap.get('mode');
+    this.isViewMode = mode === 'view';
     this.loadProfile();
     this.loadChildren();
   }
@@ -84,6 +88,31 @@ export class ParentProfileComponent implements OnInit {
           email: profile.email || '',
           phone: profile.phone || ''
         });
+      } else {
+        // If no profile exists in Firestore, try to populate from Google account
+        const user = this.authService.getCurrentUser();
+        if (user) {
+          const googleDisplayName = user.displayName || '';
+          const googleEmail = user.email || '';
+          const googlePhone = (user as any).phoneNumber || '';
+          const googlePhoto = user.photoURL || '';
+
+          this.profileForm.patchValue({
+            displayName: googleDisplayName,
+            email: googleEmail,
+            phone: googlePhone
+          });
+
+          // Create the parent document using the available Google info
+          await this.parentService.updateParent(this.uid, {
+            displayName: googleDisplayName,
+            email: googleEmail,
+            phone: googlePhone,
+            photoURL: googlePhoto,
+            createdAt: new Date()
+          });
+          this.showMessage('Profile created from Google account');
+        }
       }
     } catch (error) {
       console.error('Error loading profile', error);
@@ -163,4 +192,6 @@ export class ParentProfileComponent implements OnInit {
   private showMessage(msg: string): void {
     this.snackBar.open(msg, 'Close', { duration: 3000, horizontalPosition: 'end', verticalPosition: 'top' });
   }
+
+  isViewMode = false;
 }

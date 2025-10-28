@@ -16,20 +16,20 @@
         <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Full Name</mat-label>
-            <input matInput formControlName="displayName">
+            <input matInput formControlName="displayName" [readonly]="isViewMode" [disabled]="isViewMode">
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" type="email">
+            <input matInput formControlName="email" type="email" [readonly]="isViewMode" [disabled]="isViewMode">
           </mat-form-field>
 
           <mat-form-field appearance="fill" class="full-width">
             <mat-label>Phone</mat-label>
-            <input matInput formControlName="phone" type="tel">
+            <input matInput formControlName="phone" type="tel" [readonly]="isViewMode" [disabled]="isViewMode">
           </mat-form-field>
 
-          <div class="actions">
+          <div class="actions" *ngIf="!isViewMode">
             <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Save</button>
           </div>
         </form>
@@ -42,37 +42,41 @@
         <mat-card-subtitle>Manage your registered children</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        <form [formGroup]="childForm" (ngSubmit)="addOrUpdateChild()">
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Child Name</mat-label>
-            <input matInput formControlName="name">
-          </mat-form-field>
+        <!-- Show the add/edit child form only when not in view mode -->
+        <div *ngIf="!isViewMode">
+          <form [formGroup]="childForm" (ngSubmit)="addOrUpdateChild()">
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Child Name</mat-label>
+              <input matInput formControlName="name">
+            </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Grade</mat-label>
-            <input matInput formControlName="grade">
-          </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Grade</mat-label>
+              <input matInput formControlName="grade">
+            </mat-form-field>
 
-          <mat-form-field appearance="fill" class="full-width">
-            <mat-label>Age</mat-label>
-            <input matInput formControlName="age" type="number">
-          </mat-form-field>
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Age</mat-label>
+              <input matInput formControlName="age" type="number">
+            </mat-form-field>
 
-          <div class="actions">
-            <button mat-stroked-button color="primary" type="submit">{{ editingChildId ? 'Update Child' : 'Add Child' }}</button>
-            <button mat-button type="button" (click)="childForm.reset(); editingChildId = null">Clear</button>
-          </div>
-        </form>
+            <div class="actions">
+              <button mat-stroked-button color="primary" type="submit">{{ editingChildId ? 'Update Child' : 'Add Child' }}</button>
+              <button mat-button type="button" (click)="childForm.reset(); editingChildId = null">Clear</button>
+            </div>
+          </form>
+        </div>
 
         <mat-list>
           <mat-list-item *ngFor="let child of children">
-            <div mat-line>{{ child.name }} — Grade {{ child.grade }} — Age {{ child.age }}</div>
-            <button mat-icon-button (click)="editChild(child)" matTooltip="Edit Child"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button (click)="deleteChild(child)" matTooltip="Delete Child"><mat-icon>delete</mat-icon></button>
+            <div class="child-line">{{ child.name }} — Grade {{ child.grade }} — Age {{ child.age }}</div>
+            <ng-container *ngIf="!isViewMode">
+              <button mat-icon-button (click)="editChild(child)" matTooltip="Edit Child"><mat-icon>edit</mat-icon></button>
+              <button mat-icon-button (click)="deleteChild(child)" matTooltip="Delete Child"><mat-icon>delete</mat-icon></button>
+            </ng-container>
           </mat-list-item>
         </mat-list>
       </mat-card-content>
     </mat-card>
   </div>
 </div>
-
