@@ -34,7 +34,6 @@ export class AuthService {
 
         // Check if a parent profile already exists for this email
         const email = u.email;
-        debugger;
         if (email) {
           const parentsCol = collection(this.firestore, 'parents');
           const q = query(parentsCol, where('email', '==', email));

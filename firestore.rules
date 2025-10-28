@@ -21,5 +21,18 @@ service cloud.firestore {
     match /students/{document} {
       allow read, write: if request.auth != null;
     }
+
+    // Parents collection: allow authenticated users to read (for email lookup)
+    // and allow a user to create/update their own parent document (uid must match)
+    match /parents/{parentId} {
+      // Allow authenticated users to read parent documents (needed for lookup by email)
+      allow read: if request.auth != null;
+
+      // Creating a parent document is allowed if the authenticated user's UID matches the UID in the incoming data
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+
+      // Only the owner (matching UID) can update or delete their parent document
+      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+    }
   }
 }
