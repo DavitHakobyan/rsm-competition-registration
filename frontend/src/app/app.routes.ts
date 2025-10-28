@@ -9,11 +9,13 @@ import { AdminCompetitionsComponent } from './components/admin-competitions/admi
 import { AdminCompetitionComponent } from './components/admin-competition/admin-competition';
 import { authGuard } from './guards/auth-guard';
 import { AdminParentsComponent } from './components/admin-parents/admin-parents';
+import { ParentProfileComponent } from './components/parent-profile/parent-profile';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/competitions', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  { path: 'profile', component: ParentProfileComponent, canActivate: [authGuard] },
   { path: 'competitions', component: CompetitionsComponent, canActivate: [authGuard] },
   { path: 'register/:competitionId', component: RegisterComponent, canActivate: [authGuard] },
   { path: 'payment/:registrationId', component: PaymentComponent, canActivate: [authGuard] },

@@ -1,0 +1,78 @@
+<div class="parent-profile-container">
+  <mat-toolbar color="primary">
+    <span>My Profile</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="authService.signOut()" matTooltip="Sign Out">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Contact Information</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Full Name</mat-label>
+            <input matInput formControlName="displayName">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" type="email">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Phone</mat-label>
+            <input matInput formControlName="phone" type="tel">
+          </mat-form-field>
+
+          <div class="actions">
+            <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">Save</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Children</mat-card-title>
+        <mat-card-subtitle>Manage your registered children</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <form [formGroup]="childForm" (ngSubmit)="addOrUpdateChild()">
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Child Name</mat-label>
+            <input matInput formControlName="name">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Grade</mat-label>
+            <input matInput formControlName="grade">
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" class="full-width">
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="age" type="number">
+          </mat-form-field>
+
+          <div class="actions">
+            <button mat-stroked-button color="primary" type="submit">{{ editingChildId ? 'Update Child' : 'Add Child' }}</button>
+            <button mat-button type="button" (click)="childForm.reset(); editingChildId = null">Clear</button>
+          </div>
+        </form>
+
+        <mat-list>
+          <mat-list-item *ngFor="let child of children">
+            <div mat-line>{{ child.name }} — Grade {{ child.grade }} — Age {{ child.age }}</div>
+            <button mat-icon-button (click)="editChild(child)" matTooltip="Edit Child"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button (click)="deleteChild(child)" matTooltip="Delete Child"><mat-icon>delete</mat-icon></button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
