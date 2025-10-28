@@ -1,55 +1,5 @@
 <div class="competitions-container">
-  <mat-toolbar color="primary">
-    <span>Available Math Competitions</span>
-    <span class="spacer"></span>
-
-    <!-- Navigation buttons -->
-    <button mat-icon-button routerLink="/my-registrations" matTooltip="My Registrations">
-      <mat-icon>assignment_turned_in</mat-icon>
-    </button>
-
-    <button mat-icon-button routerLink="/dashboard" matTooltip="Dashboard">
-      <mat-icon>dashboard</mat-icon>
-    </button>
-
-    <button mat-icon-button (click)="loadCompetitions()" matTooltip="Refresh">
-      <mat-icon>refresh</mat-icon>
-    </button>
-
-    <!-- Admin button -->
-    <button mat-icon-button routerLink="/admin/competitions" matTooltip="Admin Panel">
-      <mat-icon>admin_panel_settings</mat-icon>
-    </button>
-
-    <!-- User menu -->
-    <button mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="Account">
-      <mat-icon>account_circle</mat-icon>
-    </button>
-
-    <mat-menu #userMenu="matMenu">
-      <button mat-menu-item routerLink="/my-registrations">
-        <mat-icon>assignment_turned_in</mat-icon>
-        <span>My Registrations</span>
-      </button>
-      <button mat-menu-item routerLink="/dashboard">
-        <mat-icon>dashboard</mat-icon>
-        <span>Dashboard</span>
-      </button>
-      <button mat-menu-item (click)="openProfile()">
-        <mat-icon>person</mat-icon>
-        <span>My Profile</span>
-      </button>
-      <button mat-menu-item routerLink="/admin/competitions">
-        <mat-icon>admin_panel_settings</mat-icon>
-        <span>Admin Panel</span>
-      </button>
-      <mat-divider></mat-divider>
-      <button mat-menu-item (click)="signOut()">
-        <mat-icon>logout</mat-icon>
-        <span>Sign Out</span>
-      </button>
-    </mat-menu>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="competitions-content">
     <!-- Loading State -->

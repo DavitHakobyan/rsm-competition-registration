@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthService } from '../../services/auth';
 import { ParentService, ChildProfile } from '../../services/parent';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-parent-profile',
@@ -27,7 +28,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatInputModule,
     MatListModule,
     MatSnackBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ToolbarComponent
   ],
   templateUrl: './parent-profile.html',
   styleUrl: './parent-profile.scss'

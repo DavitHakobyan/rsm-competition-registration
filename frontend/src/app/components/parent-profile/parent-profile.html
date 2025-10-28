@@ -1,11 +1,5 @@
 <div class="parent-profile-container">
-  <mat-toolbar color="primary">
-    <span>My Profile</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="authService.signOut()" matTooltip="Sign Out">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="content-container">
     <mat-card>

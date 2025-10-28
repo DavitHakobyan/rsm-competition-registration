@@ -13,22 +13,23 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 import { CompetitionService, Competition } from '../../services/competition';
 import { AuthService } from '../../services/auth';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-admin-competition',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatToolbarModule,
+    MatButtonModule,
     MatIconModule,
-    MatSnackBarModule
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    ToolbarComponent
   ],
   templateUrl: './admin-competition.html',
   styleUrl: './admin-competition.scss'
@@ -74,7 +75,7 @@ export class AdminCompetitionComponent implements OnInit {
       this.isLoading = true;
       const competitions = await this.competitionService.getCompetitions();
       const competition = competitions.find(c => c.id === id);
-      
+
       if (competition) {
         this.competitionForm.patchValue({
           name: competition.name,
@@ -100,9 +101,9 @@ export class AdminCompetitionComponent implements OnInit {
       try {
         this.isLoading = true;
         const formValue = this.competitionForm.value;
-        
+
         // Format date as YYYY-MM-DD string
-        const formattedDate = formValue.date instanceof Date 
+        const formattedDate = formValue.date instanceof Date
           ? formValue.date.toISOString().split('T')[0]
           : formValue.date;
 

@@ -1,11 +1,5 @@
 <div class="admin-competition-container">
-  <mat-toolbar color="primary">
-    <span>{{ isEditMode ? 'Edit Competition' : 'Create New Competition' }}</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="form-container">
     <mat-card class="competition-form-card">
@@ -20,12 +14,12 @@
 
       <mat-card-content>
         <form [formGroup]="competitionForm" (ngSubmit)="onSubmit()" class="competition-form">
-          
+
           <!-- Competition Name -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Competition Name</mat-label>
-            <input matInput 
-                   formControlName="name" 
+            <input matInput
+                   formControlName="name"
                    placeholder="Enter competition name"
                    required>
             <mat-error *ngIf="competitionForm.get('name')?.invalid && competitionForm.get('name')?.touched">
@@ -36,8 +30,8 @@
           <!-- Date -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Competition Date</mat-label>
-            <input matInput 
-                   [matDatepicker]="picker" 
+            <input matInput
+                   [matDatepicker]="picker"
                    formControlName="date"
                    placeholder="Select date"
                    required>
@@ -51,8 +45,8 @@
           <!-- Location -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Location</mat-label>
-            <input matInput 
-                   formControlName="location" 
+            <input matInput
+                   formControlName="location"
                    placeholder="Enter venue location"
                    required>
             <mat-error *ngIf="competitionForm.get('location')?.invalid && competitionForm.get('location')?.touched">
@@ -63,9 +57,9 @@
           <!-- Registration Fee -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Registration Fee</mat-label>
-            <input matInput 
-                   type="number" 
-                   formControlName="registrationFee" 
+            <input matInput
+                   type="number"
+                   formControlName="registrationFee"
                    placeholder="0.00"
                    step="0.01"
                    min="0"
@@ -79,8 +73,8 @@
           <!-- Description -->
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Description</mat-label>
-            <textarea matInput 
-                      formControlName="description" 
+            <textarea matInput
+                      formControlName="description"
                       placeholder="Enter competition description"
                       rows="4"
                       required></textarea>
@@ -93,14 +87,14 @@
       </mat-card-content>
 
       <mat-card-actions align="end" class="form-actions">
-        <button mat-button 
-                type="button" 
+        <button mat-button
+                type="button"
                 (click)="onCancel()"
                 [disabled]="isLoading">
           Cancel
         </button>
-        <button mat-raised-button 
-                color="primary" 
+        <button mat-raised-button
+                color="primary"
                 type="submit"
                 (click)="onSubmit()"
                 [disabled]="isLoading || competitionForm.invalid">

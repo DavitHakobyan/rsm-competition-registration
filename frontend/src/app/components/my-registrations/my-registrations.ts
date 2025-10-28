@@ -12,13 +12,13 @@ import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
 
 import { RegistrationService, Registration } from '../../services/registration';
 import { AuthService } from '../../services/auth';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-my-registrations',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -26,7 +26,8 @@ import { AuthService } from '../../services/auth';
     MatProgressSpinnerModule,
     MatChipsModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    ToolbarComponent
   ],
   templateUrl: './my-registrations.html',
   styleUrl: './my-registrations.scss'
@@ -52,7 +53,7 @@ export class MyRegistrationsComponent implements OnInit {
     try {
       this.loading = true;
       const currentUser = this.authService.getCurrentUser();
-      
+
       if (!currentUser) {
         this.router.navigate(['/login']);
         return;
@@ -143,7 +144,7 @@ export class MyRegistrationsComponent implements OnInit {
     if (registration.paid) {
       return;
     }
-    
+
     if (registration.id) {
       this.router.navigate(['/payment', registration.id]);
     }

@@ -10,11 +10,21 @@ import { AuthService } from '../../services/auth';
 import { DataSeedService } from '../../services/data-seed';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterLink, MatToolbarModule, MatButtonModule, MatIconModule, MatCardModule, MatTooltipModule],
+  imports: [
+    CommonModule,
+    RouterLink,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatTooltipModule,
+    ToolbarComponent
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.scss'
 })

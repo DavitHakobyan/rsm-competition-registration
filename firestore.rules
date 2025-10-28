@@ -33,6 +33,18 @@ service cloud.firestore {
 
       // Only the owner (matching UID) can update or delete their parent document
       allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
+
+      // Children subcollection: only the parent (owner) may read and manage their children
+      match /children/{childId} {
+        // Parent can read their own children
+        allow read: if request.auth != null && request.auth.uid == parentId;
+
+        // Parent can create child documents under their own parent doc
+        allow create: if request.auth != null && request.auth.uid == parentId;
+
+        // Parent can update or delete their own children
+        allow update, delete: if request.auth != null && request.auth.uid == parentId;
+      }
     }
   }
 }

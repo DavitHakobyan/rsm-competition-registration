@@ -1,10 +1,5 @@
 <div class="register-container">
-  <mat-toolbar color="primary">
-    <button mat-icon-button (click)="onCancel()" matTooltip="Back to Competitions">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>Student Registration</span>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="register-content" *ngIf="!loading">
     <!-- Competition Info -->
@@ -94,7 +89,7 @@
             <!-- Parent Phone -->
             <mat-form-field appearance="outline" class="half-width">
               <mat-label>Parent Phone</mat-label>
-              <input matInput formControlName="parentPhone" 
+              <input matInput formControlName="parentPhone"
                      placeholder="(XXX) XXX-XXXX"
                      (input)="formatPhoneNumber($event, 'parentPhone')">
               <mat-error *ngIf="registrationForm.get('parentPhone')?.invalid && registrationForm.get('parentPhone')?.touched">
@@ -113,7 +108,7 @@
             <!-- Emergency Phone -->
             <mat-form-field appearance="outline" class="half-width">
               <mat-label>Emergency Phone</mat-label>
-              <input matInput formControlName="emergencyPhone" 
+              <input matInput formControlName="emergencyPhone"
                      placeholder="(XXX) XXX-XXXX"
                      (input)="formatPhoneNumber($event, 'emergencyPhone')">
               <mat-error *ngIf="registrationForm.get('emergencyPhone')?.invalid && registrationForm.get('emergencyPhone')?.touched">
@@ -131,7 +126,7 @@
             <!-- Special Needs -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Special Accommodations</mat-label>
-              <textarea matInput formControlName="specialNeeds" 
+              <textarea matInput formControlName="specialNeeds"
                         placeholder="Any special accommodations needed (optional)"
                         rows="3"></textarea>
             </mat-form-field>
@@ -141,7 +136,7 @@
             <!-- Dietary Restrictions -->
             <mat-form-field appearance="outline" class="full-width">
               <mat-label>Dietary Restrictions</mat-label>
-              <textarea matInput formControlName="dietaryRestrictions" 
+              <textarea matInput formControlName="dietaryRestrictions"
                         placeholder="Any dietary restrictions or allergies (optional)"
                         rows="2"></textarea>
             </mat-form-field>

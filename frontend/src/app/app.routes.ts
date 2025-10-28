@@ -10,6 +10,7 @@ import { AdminCompetitionComponent } from './components/admin-competition/admin-
 import { authGuard } from './guards/auth-guard';
 import { AdminParentsComponent } from './components/admin-parents/admin-parents';
 import { ParentProfileComponent } from './components/parent-profile/parent-profile';
+import { AdminRegistrationsComponent } from './components/admin-registrations/admin-registrations';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/competitions', pathMatch: 'full' },
@@ -22,6 +23,7 @@ export const routes: Routes = [
   { path: 'my-registrations', component: MyRegistrationsComponent, canActivate: [authGuard] },
   { path: 'admin/competitions', component: AdminCompetitionsComponent, canActivate: [authGuard] },
   { path: 'admin/parents', component: AdminParentsComponent, canActivate: [authGuard] },
+  { path: 'admin/registrations', component: AdminRegistrationsComponent, canActivate: [authGuard] },
   { path: 'admin/competition/new', component: AdminCompetitionComponent, canActivate: [authGuard] },
   { path: 'admin/competition/edit/:id', component: AdminCompetitionComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '/competitions' }
