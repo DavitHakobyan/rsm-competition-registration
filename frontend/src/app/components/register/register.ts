@@ -15,6 +15,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RegistrationService, Registration } from '../../services/registration';
 import { CompetitionService, Competition } from '../../services/competition';
 import { AuthService } from '../../services/auth';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-register',
@@ -30,7 +31,8 @@ import { AuthService } from '../../services/auth';
     MatIconModule,
     MatToolbarModule,
     MatSnackBarModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    ToolbarComponent
   ],
   templateUrl: './register.html',
   styleUrl: './register.scss'
@@ -40,7 +42,7 @@ export class RegisterComponent implements OnInit {
   competition: Competition | null = null;
   loading = false;
   submitting = false;
-  
+
   grades = [
     'Kindergarten', '1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade',
     '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade'
@@ -86,7 +88,7 @@ export class RegisterComponent implements OnInit {
       this.loading = true;
       const competitions = await this.competitionService.getCompetitions();
       this.competition = competitions.find(c => c.id === competitionId) || null;
-      
+
       if (!this.competition) {
         this.snackBar.open('Competition not found', 'Close', { duration: 3000 });
         this.router.navigate(['/competitions']);
@@ -154,7 +156,7 @@ export class RegisterComponent implements OnInit {
     if (this.registrationForm.valid && this.competition) {
       try {
         this.submitting = true;
-        
+
         const currentUser = this.authService.getCurrentUser();
         if (!currentUser) {
           throw new Error('User not authenticated');
@@ -169,18 +171,18 @@ export class RegisterComponent implements OnInit {
         };
 
         const registrationId = await this.registrationService.createRegistration(registrationData);
-        
-        this.snackBar.open('Registration submitted successfully! Redirecting to payment...', 'Close', { 
+
+        this.snackBar.open('Registration submitted successfully! Redirecting to payment...', 'Close', {
           duration: 3000,
           panelClass: ['success-snackbar']
         });
-        
+
         // Navigate to payment page
         this.router.navigate(['/payment', registrationId]);
-        
+
       } catch (error) {
         console.error('Error submitting registration:', error);
-        this.snackBar.open('Error submitting registration. Please try again.', 'Close', { 
+        this.snackBar.open('Error submitting registration. Please try again.', 'Close', {
           duration: 5000,
           panelClass: ['error-snackbar']
         });

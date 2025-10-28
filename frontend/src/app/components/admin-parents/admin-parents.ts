@@ -12,6 +12,7 @@ import { RegistrationService, Registration } from '../../services/registration';
 import { AuthService } from '../../services/auth';
 import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-admin-parents',
@@ -26,7 +27,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSnackBarModule,
     MatProgressSpinnerModule,
     RouterModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ToolbarComponent
   ],
   templateUrl: './admin-parents.html',
   styleUrl: './admin-parents.scss'

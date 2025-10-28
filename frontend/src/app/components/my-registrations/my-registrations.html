@@ -1,14 +1,5 @@
 <div class="registrations-container">
-  <mat-toolbar color="primary">
-    <button mat-icon-button routerLink="/dashboard" matTooltip="Back to Dashboard">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    <span>My Registrations</span>
-    <span class="spacer"></span>
-    <button mat-icon-button (click)="loadRegistrations()" matTooltip="Refresh">
-      <mat-icon>refresh</mat-icon>
-    </button>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="registrations-content">
     <!-- Loading State -->
@@ -83,7 +74,7 @@
                     <mat-icon>{{ getStatusIcon(registration.status) }}</mat-icon>
                     {{ registration.status | titlecase }}
                   </mat-chip>
-                  
+
                   <mat-chip [color]="registration.paid ? 'primary' : 'accent'">
                     <mat-icon>{{ getPaymentStatusIcon(registration.paid) }}</mat-icon>
                     {{ getPaymentStatusText(registration.paid) }}
@@ -124,16 +115,16 @@
             <mat-icon>visibility</mat-icon>
             Details
           </button>
-          
-          <button mat-button 
+
+          <button mat-button
                   *ngIf="!registration.paid && registration.status !== 'cancelled'"
                   (click)="onPayNow(registration)"
                   color="accent">
             <mat-icon>payment</mat-icon>
             Pay Now
           </button>
-          
-          <button mat-button 
+
+          <button mat-button
                   *ngIf="registration.status !== 'cancelled'"
                   (click)="onCancelRegistration(registration)"
                   color="warn">

@@ -1,19 +1,5 @@
 <div class="admin-competitions-container">
-  <mat-toolbar color="primary">
-    <span>Admin - Manage Competitions</span>
-    <span class="spacer"></span>
-    <button mat-button (click)="goToCompetitions()" class="nav-button">
-      <mat-icon>visibility</mat-icon>
-      View Public
-    </button>
-    <button mat-button routerLink="/admin/parents" class="nav-button">
-      <mat-icon>people</mat-icon>
-      Parent Registrations
-    </button>
-    <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </mat-toolbar>
+  <app-toolbar></app-toolbar>
 
   <div class="content-container">
     <div class="header-section">

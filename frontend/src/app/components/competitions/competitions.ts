@@ -11,13 +11,13 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompetitionService, Competition } from '../../services/competition';
 import { AuthService } from '../../services/auth';
+import { ToolbarComponent } from '../toolbar/toolbar';
 
 @Component({
   selector: 'app-competitions',
   standalone: true,
   imports: [
     CommonModule,
-    RouterLink,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
@@ -25,7 +25,8 @@ import { AuthService } from '../../services/auth';
     MatProgressSpinnerModule,
     MatMenuModule,
     MatDividerModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ToolbarComponent
   ],
   templateUrl: './competitions.html',
   styleUrl: './competitions.scss'
