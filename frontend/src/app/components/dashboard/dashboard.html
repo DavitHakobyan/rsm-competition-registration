@@ -15,10 +15,10 @@
     <div class="welcome-section">
       <h1>Welcome to Math Competition Registration</h1>
       <p>Manage your child's math competition registrations here.</p>
-      <button mat-stroked-button color="accent" (click)="seedData()" class="seed-button">
-        <mat-icon>data_object</mat-icon>
-        Add Sample Competitions (for testing)
-      </button>
+<!--      <button mat-stroked-button color="accent" (click)="seedData()" class="seed-button">-->
+<!--        <mat-icon>data_object</mat-icon>-->
+<!--        Add Sample Competitions (for testing)-->
+<!--      </button>-->
     </div>
 
     <div class="cards-container">
@@ -45,6 +45,46 @@
         </mat-card-content>
         <mat-card-actions>
           <button mat-raised-button color="accent" routerLink="/my-registrations">View Registrations</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>My Profile</mat-card-title>
+          <mat-card-subtitle>Manage your contact info and children</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Update your contact details and add or edit your children.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/profile">Open Profile</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>Admin Panel</mat-card-title>
+          <mat-card-subtitle>Manage competitions and settings</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Create, edit, and manage math competitions and their details.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="warn" routerLink="/admin/competitions">Manage Competitions</button>
+        </mat-card-actions>
+      </mat-card>
+
+      <!-- New card: direct All Registrations shortcut -->
+      <mat-card class="feature-card">
+        <mat-card-header>
+          <mat-card-title>View all Registrations</mat-card-title>
+          <mat-card-subtitle>View every registration in the system</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Open the admin registrations panel to see all parent registrations, their status, and payment info.</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary" routerLink="/admin/parents">View Registrations</button>
         </mat-card-actions>
       </mat-card>
     </div>

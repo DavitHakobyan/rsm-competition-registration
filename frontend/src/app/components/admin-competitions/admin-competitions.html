@@ -1,0 +1,118 @@
+<div class="admin-competitions-container">
+  <mat-toolbar color="primary">
+    <span>Admin - Manage Competitions</span>
+    <span class="spacer"></span>
+    <button mat-button (click)="goToCompetitions()" class="nav-button">
+      <mat-icon>visibility</mat-icon>
+      View Public
+    </button>
+    <button mat-button routerLink="/admin/parents" class="nav-button">
+      <mat-icon>people</mat-icon>
+      Parent Registrations
+    </button>
+    <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="content-container">
+    <div class="header-section">
+      <h1>Competition Management</h1>
+      <button mat-raised-button color="primary" (click)="createCompetition()" class="create-button">
+        <mat-icon>add</mat-icon>
+        Create New Competition
+      </button>
+    </div>
+
+    <mat-card class="competitions-card">
+      <mat-card-header>
+        <mat-card-title>All Competitions</mat-card-title>
+        <mat-card-subtitle>Manage competition details, dates, and pricing</mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <div *ngIf="isLoading" class="loading-container">
+          <p>Loading competitions...</p>
+        </div>
+
+        <div *ngIf="!isLoading && competitions.length === 0" class="empty-state">
+          <mat-icon class="empty-icon">event_note</mat-icon>
+          <h3>No competitions found</h3>
+          <p>Create your first competition to get started.</p>
+          <button mat-raised-button color="primary" (click)="createCompetition()">
+            <mat-icon>add</mat-icon>
+            Create Competition
+          </button>
+        </div>
+
+        <div *ngIf="!isLoading && competitions.length > 0" class="table-container">
+          <table mat-table [dataSource]="competitions" class="competitions-table">
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef class="name-column">Competition Name</th>
+              <td mat-cell *matCellDef="let competition" class="name-cell">
+                <div class="competition-name">{{ competition.name }}</div>
+                <div class="competition-description">{{ competition.description | slice:0:80 }}{{ competition.description.length > 80 ? '...' : '' }}</div>
+              </td>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="date">
+              <th mat-header-cell *matHeaderCellDef>Date</th>
+              <td mat-cell *matCellDef="let competition">
+                <div class="date-cell">
+                  <mat-icon class="date-icon">event</mat-icon>
+                  {{ formatDate(competition.date) }}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Location Column -->
+            <ng-container matColumnDef="location">
+              <th mat-header-cell *matHeaderCellDef>Location</th>
+              <td mat-cell *matCellDef="let competition">
+                <div class="location-cell">
+                  <mat-icon class="location-icon">location_on</mat-icon>
+                  {{ competition.location }}
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Fee Column -->
+            <ng-container matColumnDef="fee">
+              <th mat-header-cell *matHeaderCellDef>Registration Fee</th>
+              <td mat-cell *matCellDef="let competition">
+                <div class="fee-cell">
+                  <span class="fee-amount">{{ formatPrice(competition.registrationFee) }}</span>
+                </div>
+              </td>
+            </ng-container>
+
+            <!-- Actions Column -->
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef class="actions-column">Actions</th>
+              <td mat-cell *matCellDef="let competition" class="actions-cell">
+                <button mat-icon-button
+                        (click)="editCompetition(competition)"
+                        matTooltip="Edit Competition"
+                        color="primary">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button
+                        (click)="deleteCompetition(competition)"
+                        matTooltip="Delete Competition"
+                        color="warn">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" class="competition-row"></tr>
+          </table>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

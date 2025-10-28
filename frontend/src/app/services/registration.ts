@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy } from '@angular/fire/firestore';
+import { Firestore, collection, addDoc, getDocs, doc, updateDoc, deleteDoc, query, where, orderBy, getDoc } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
 
 export interface Registration {
@@ -7,6 +7,7 @@ export interface Registration {
   parentId: string;
   competitionId: string;
   competitionName?: string; // Denormalized for easier display
+  competitionFee?: number; // Competition fee for payment
   studentName: string;
   studentGrade: string;
   studentSchool?: string;
@@ -18,6 +19,9 @@ export interface Registration {
   dietaryRestrictions?: string;
   paid: boolean;
   paymentId?: string;
+  paymentOrderId?: string; // PayPal order ID
+  paymentDetails?: any; // PayPal payment details
+  paymentDate?: Date; // When payment was completed
   registrationDate: Date;
   status: 'pending' | 'confirmed' | 'cancelled';
 }
@@ -72,6 +76,19 @@ export class RegistrationService {
     })) as Registration[];
   }
 
+  async getRegistrationById(id: string): Promise<Registration | null> {
+    const registrationRef = doc(this.firestore, 'registrations', id);
+    const docSnap = await getDoc(registrationRef);
+
+    if (docSnap.exists()) {
+      return {
+        id: docSnap.id,
+        ...docSnap.data()
+      } as Registration;
+    }
+    return null;
+  }
+
   async updateRegistration(id: string, updates: Partial<Registration>): Promise<void> {
     const registrationRef = doc(this.firestore, 'registrations', id);
     await updateDoc(registrationRef, updates);
@@ -87,6 +104,19 @@ export class RegistrationService {
       paymentId,
       status: 'confirmed'
     });
+  }
+
+  // Fetch all registrations (admin use)
+  async getAllRegistrations(): Promise<Registration[]> {
+    const q = query(
+      this.registrationsCollection,
+      orderBy('registrationDate', 'desc')
+    );
+    const querySnapshot = await getDocs(q);
+    return querySnapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as Registration[];
   }
 
   async deleteRegistration(id: string): Promise<void> {

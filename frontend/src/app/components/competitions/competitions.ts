@@ -8,6 +8,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { CompetitionService, Competition } from '../../services/competition';
 import { AuthService } from '../../services/auth';
 
@@ -15,15 +16,16 @@ import { AuthService } from '../../services/auth';
   selector: 'app-competitions',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     RouterLink,
-    MatCardModule, 
-    MatButtonModule, 
+    MatCardModule,
+    MatButtonModule,
     MatIconModule,
     MatToolbarModule,
     MatProgressSpinnerModule,
     MatMenuModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule
   ],
   templateUrl: './competitions.html',
   styleUrl: './competitions.scss'
@@ -38,6 +40,11 @@ export class CompetitionsComponent implements OnInit {
     private router: Router,
     private authService: AuthService
   ) {}
+
+  // Open profile in view mode (adds query param ?mode=view)
+  openProfile(): void {
+    this.router.navigate(['/profile'], { queryParams: { mode: 'view' } });
+  }
 
   async ngOnInit(): Promise<void> {
     await this.loadCompetitions();

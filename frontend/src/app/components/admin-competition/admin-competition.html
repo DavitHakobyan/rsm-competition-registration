@@ -1,0 +1,113 @@
+<div class="admin-competition-container">
+  <mat-toolbar color="primary">
+    <span>{{ isEditMode ? 'Edit Competition' : 'Create New Competition' }}</span>
+    <span class="spacer"></span>
+    <button mat-icon-button (click)="signOut()" matTooltip="Sign Out">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <div class="form-container">
+    <mat-card class="competition-form-card">
+      <mat-card-header>
+        <mat-card-title>
+          {{ isEditMode ? 'Edit Competition' : 'Create New Competition' }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ isEditMode ? 'Update competition details' : 'Fill in the competition information' }}
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="competitionForm" (ngSubmit)="onSubmit()" class="competition-form">
+          
+          <!-- Competition Name -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Competition Name</mat-label>
+            <input matInput 
+                   formControlName="name" 
+                   placeholder="Enter competition name"
+                   required>
+            <mat-error *ngIf="competitionForm.get('name')?.invalid && competitionForm.get('name')?.touched">
+              {{ getErrorMessage('name') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Date -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Competition Date</mat-label>
+            <input matInput 
+                   [matDatepicker]="picker" 
+                   formControlName="date"
+                   placeholder="Select date"
+                   required>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="competitionForm.get('date')?.invalid && competitionForm.get('date')?.touched">
+              {{ getErrorMessage('date') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Location -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Location</mat-label>
+            <input matInput 
+                   formControlName="location" 
+                   placeholder="Enter venue location"
+                   required>
+            <mat-error *ngIf="competitionForm.get('location')?.invalid && competitionForm.get('location')?.touched">
+              {{ getErrorMessage('location') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Registration Fee -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Registration Fee</mat-label>
+            <input matInput 
+                   type="number" 
+                   formControlName="registrationFee" 
+                   placeholder="0.00"
+                   step="0.01"
+                   min="0"
+                   required>
+            <span matTextPrefix>$</span>
+            <mat-error *ngIf="competitionForm.get('registrationFee')?.invalid && competitionForm.get('registrationFee')?.touched">
+              {{ getErrorMessage('registrationFee') }}
+            </mat-error>
+          </mat-form-field>
+
+          <!-- Description -->
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput 
+                      formControlName="description" 
+                      placeholder="Enter competition description"
+                      rows="4"
+                      required></textarea>
+            <mat-error *ngIf="competitionForm.get('description')?.invalid && competitionForm.get('description')?.touched">
+              {{ getErrorMessage('description') }}
+            </mat-error>
+          </mat-form-field>
+
+        </form>
+      </mat-card-content>
+
+      <mat-card-actions align="end" class="form-actions">
+        <button mat-button 
+                type="button" 
+                (click)="onCancel()"
+                [disabled]="isLoading">
+          Cancel
+        </button>
+        <button mat-raised-button 
+                color="primary" 
+                type="submit"
+                (click)="onSubmit()"
+                [disabled]="isLoading || competitionForm.invalid">
+          <mat-icon *ngIf="isLoading">hourglass_empty</mat-icon>
+          {{ isLoading ? 'Saving...' : (isEditMode ? 'Update Competition' : 'Create Competition') }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</div>

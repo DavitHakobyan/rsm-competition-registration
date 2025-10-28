@@ -1,0 +1,138 @@
+<!-- Loading State for Registration -->
+<div *ngIf="!registration && loading" class="loading-container">
+  <mat-spinner></mat-spinner>
+  <p>Loading registration details...</p>
+</div>
+
+<div class="payment-container" *ngIf="registration">
+  <!-- Header -->
+  <mat-card class="payment-header-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>payment</mat-icon>
+        Complete Payment
+      </mat-card-title>
+      <mat-card-subtitle>
+        Secure your spot for {{ registration.competitionName }}
+      </mat-card-subtitle>
+    </mat-card-header>
+  </mat-card>
+
+  <!-- Registration Summary -->
+  <mat-card class="registration-summary-card">
+    <mat-card-header>
+      <mat-card-title>Registration Summary</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="summary-details">
+        <div class="detail-row">
+          <span class="label">Student:</span>
+          <span class="value">{{ registration.studentName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Competition:</span>
+          <span class="value">{{ registration.competitionName }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Grade:</span>
+          <span class="value">{{ registration.studentGrade }}</span>
+        </div>
+        <div class="detail-row" *ngIf="registration.studentSchool">
+          <span class="label">School:</span>
+          <span class="value">{{ registration.studentSchool }}</span>
+        </div>
+        
+        <mat-divider></mat-divider>
+        
+        <div class="detail-row total-row">
+          <span class="label">Total Amount:</span>
+          <span class="value total-amount">{{ formatPrice(registration.competitionFee || 0) }}</span>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Payment Section -->
+  <mat-card class="payment-section-card" *ngIf="!paymentCompleted">
+    <mat-card-header>
+      <mat-card-title>Payment Method</mat-card-title>
+      <mat-card-subtitle>Choose your preferred payment method</mat-card-subtitle>
+    </mat-card-header>
+    
+    <mat-card-content>
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Initializing payment system...</p>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="paymentError && !loading" class="error-container">
+        <mat-icon color="warn">error</mat-icon>
+        <p>{{ paymentError }}</p>
+        <button mat-raised-button color="primary" (click)="retryPayment()">
+          <mat-icon>refresh</mat-icon>
+          Retry
+        </button>
+      </div>
+
+      <!-- Test Payment Option -->
+      <div *ngIf="useTestPayment && paypalInitialized && !loading && !paymentError" class="test-payment-container">
+        <div class="test-payment-notice">
+          <mat-icon>info</mat-icon>
+          <p><strong>Demo Mode:</strong> This is a test payment system for demonstration purposes.</p>
+        </div>
+        
+        <button 
+          mat-raised-button 
+          color="primary" 
+          (click)="processTestPayment()"
+          [disabled]="paymentProcessing"
+          class="test-payment-button">
+          <mat-spinner *ngIf="paymentProcessing" diameter="20" class="spinner"></mat-spinner>
+          <mat-icon *ngIf="!paymentProcessing">payment</mat-icon>
+          <span *ngIf="!paymentProcessing">Complete Test Payment</span>
+          <span *ngIf="paymentProcessing">Processing...</span>
+        </button>
+      </div>
+
+      <!-- PayPal Buttons Container -->
+      <div *ngIf="!useTestPayment && paypalInitialized && !loading && !paymentError" 
+           id="paypal-buttons" 
+           class="paypal-buttons-container">
+      </div>
+
+      <!-- Payment Security Info -->
+      <div class="payment-security-info" *ngIf="paypalInitialized && !loading && !paymentError">
+        <mat-icon>security</mat-icon>
+        <p>Your payment is processed securely through PayPal. We never store your payment information.</p>
+      </div>
+    </mat-card-content>
+
+    <mat-card-actions align="end">
+      <button mat-button (click)="onCancel()" [disabled]="paymentProcessing">
+        Cancel
+      </button>
+    </mat-card-actions>
+  </mat-card>
+
+  <!-- Payment Success -->
+  <mat-card class="payment-success-card" *ngIf="paymentCompleted">
+    <mat-card-content>
+      <div class="success-container">
+        <mat-icon color="primary" class="success-icon">check_circle</mat-icon>
+        <h2>Payment Successful!</h2>
+        <p>Your registration for <strong>{{ registration.competitionName }}</strong> has been confirmed.</p>
+        <p>Student: <strong>{{ registration.studentName }}</strong></p>
+        <p>You will be redirected to your registrations page shortly.</p>
+        
+        <div class="success-actions">
+          <button mat-raised-button color="primary" (click)="onCancel()">
+            <mat-icon>list</mat-icon>
+            View My Registrations
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
