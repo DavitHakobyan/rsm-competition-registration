@@ -5,6 +5,8 @@ import { CompetitionsComponent } from './components/competitions/competitions';
 import { RegisterComponent } from './components/register/register';
 import { MyRegistrationsComponent } from './components/my-registrations/my-registrations';
 import { PaymentComponent } from './components/payment/payment';
+import { AdminCompetitionsComponent } from './components/admin-competitions/admin-competitions';
+import { AdminCompetitionComponent } from './components/admin-competition/admin-competition';
 import { authGuard } from './guards/auth-guard';
 
 export const routes: Routes = [
@@ -15,5 +17,8 @@ export const routes: Routes = [
   { path: 'register/:competitionId', component: RegisterComponent, canActivate: [authGuard] },
   { path: 'payment/:registrationId', component: PaymentComponent, canActivate: [authGuard] },
   { path: 'my-registrations', component: MyRegistrationsComponent, canActivate: [authGuard] },
+  { path: 'admin/competitions', component: AdminCompetitionsComponent, canActivate: [authGuard] },
+  { path: 'admin/competition/new', component: AdminCompetitionComponent, canActivate: [authGuard] },
+  { path: 'admin/competition/edit/:id', component: AdminCompetitionComponent, canActivate: [authGuard] },
   { path: '**', redirectTo: '/competitions' }
 ];

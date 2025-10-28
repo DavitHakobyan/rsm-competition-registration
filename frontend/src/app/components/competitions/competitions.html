@@ -16,6 +16,11 @@
       <mat-icon>refresh</mat-icon>
     </button>
     
+    <!-- Admin button -->
+    <button mat-icon-button routerLink="/admin/competitions" matTooltip="Admin Panel">
+      <mat-icon>admin_panel_settings</mat-icon>
+    </button>
+    
     <!-- User menu -->
     <button mat-icon-button [matMenuTriggerFor]="userMenu" matTooltip="Account">
       <mat-icon>account_circle</mat-icon>
@@ -29,6 +34,10 @@
       <button mat-menu-item routerLink="/dashboard">
         <mat-icon>dashboard</mat-icon>
         <span>Dashboard</span>
+      </button>
+      <button mat-menu-item routerLink="/admin/competitions">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <span>Admin Panel</span>
       </button>
       <mat-divider></mat-divider>
       <button mat-menu-item (click)="signOut()">
