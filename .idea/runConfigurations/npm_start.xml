@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="RunManager">
+  <configuration default="false" name="npm: start" type="npm" factoryName="npm" singleton="true">
+    <package_json value="$PROJECT_DIR$/frontend/package.json" />
+    <command>run</command>
+    <script>start</script>
+    <node-parameters />
+    <envs />
+    <node-interpreter>project</node-interpreter>
+    <working-directory value="$PROJECT_DIR$/frontend" />
+    <method v="2" />
+  </configuration>
+</component>
+
